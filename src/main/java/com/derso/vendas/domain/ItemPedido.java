@@ -1,11 +1,22 @@
 package com.derso.vendas.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.Min;
+
+@Entity
 public class ItemPedido {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	private Pedido pedido;
 	private Produto produto;
+	
+	@Min(1)
 	private int quantidade;
 	
 	public Long getId() {
