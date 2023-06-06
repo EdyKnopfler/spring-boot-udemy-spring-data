@@ -34,3 +34,4 @@ build/
 
 # Database
 database.mv.db
+database.trace.db
