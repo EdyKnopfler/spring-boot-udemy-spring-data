@@ -16,6 +16,9 @@ public class Cliente {
 	@Column(length = 100, unique = true)
 	private String nome;
 
+	@Column(length = 11, unique = true)
+	private String cpf;
+	
 	public Long getId() {
 		return id;
 	}
@@ -26,6 +29,14 @@ public class Cliente {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 	
 }
