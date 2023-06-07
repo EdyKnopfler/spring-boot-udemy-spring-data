@@ -33,7 +33,8 @@ public class ClientesController {
 	@GetMapping
 	public List<Cliente> listar(@RequestParam(name="nome", required=false) String nomeBusca) {
 		return nomeBusca != null
-				? repositorio.findByNomeLikeIgnoreCase("%" + nomeBusca + "%")
+				//? repositorio.findByNomeLikeIgnoreCase("%" + nomeBusca + "%")
+				? repositorio.encontrarPorNome(nomeBusca)
 				: repositorio.findAll();
 	}
 	
