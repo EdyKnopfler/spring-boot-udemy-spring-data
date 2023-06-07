@@ -1,9 +1,14 @@
 package com.derso.vendas.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+
+import java.math.BigDecimal;
+
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 
 @Entity
@@ -13,8 +18,11 @@ public class ItemPedido {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private Pedido pedido;
+	@ManyToOne
 	private Produto produto;
+	
+	@DecimalMin(value = "0.0", inclusive = false, message = "Preço mínimo positivo")
+	private BigDecimal precoCorrente;
 	
 	@Min(1)
 	private int quantidade;
@@ -23,20 +31,17 @@ public class ItemPedido {
 		return id;
 	}
 	
-	public Pedido getPedido() {
-		return pedido;
-	}
-	
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
-	}
-	
 	public Produto getProduto() {
 		return produto;
 	}
 	
 	public void setProduto(Produto produto) {
 		this.produto = produto;
+		this.precoCorrente = produto.getPreco();
+	}
+	
+	public BigDecimal getPrecoCorrente() {
+		return this.precoCorrente;
 	}
 	
 	public int getQuantidade() {
@@ -45,6 +50,10 @@ public class ItemPedido {
 	
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
+	}
+	
+	public BigDecimal getTotalItem() {
+		return precoCorrente.multiply(new BigDecimal(quantidade));
 	}
 
 }
