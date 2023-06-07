@@ -3,6 +3,8 @@ package com.derso.vendas.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,13 +41,19 @@ public class ClientesController {
 	}
 	
 	@GetMapping("/cpf/{cpf}")
-	public Cliente porCpf(@PathVariable(value="cpf") String cpf) {
+	public Cliente porCpf(@PathVariable("cpf") String cpf) {
 		return repositorio.findOneByCpf(cpf);
 	}
 
 	@PostMapping
 	public void novoCliente(@RequestBody ClienteDTO clienteDto) {
 		repositorio.save(clienteDto.criar());
+	}
+	
+	@DeleteMapping("/cpf/{cpf}")
+	@Transactional
+	public void deletarPorCpf(@PathVariable("cpf") String cpf) {
+		repositorio.excluirPorCpf(cpf);
 	}
 
 }
