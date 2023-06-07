@@ -27,7 +27,7 @@ import jakarta.persistence.EntityManager;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles({"test"})
-class VendasRepositoryTest {
+class VendasIntegratedTest {
 	
 	@Autowired
 	private EntityManager em;
