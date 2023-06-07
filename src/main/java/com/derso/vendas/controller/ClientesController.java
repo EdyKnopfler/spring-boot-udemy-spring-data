@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.derso.vendas.domain.Cliente;
@@ -29,8 +30,10 @@ public class ClientesController {
 	private ClientesRepository repositorio;
 	
 	@GetMapping
-	public List<Cliente> todos() {
-		return repositorio.findAll();
+	public List<Cliente> listar(@RequestParam(name="nome", required=false) String nomeBusca) {
+		return nomeBusca != null
+				? repositorio.findByNomeLikeIgnoreCase("%" + nomeBusca + "%")
+				: repositorio.findAll();
 	}
 
 	@PostMapping
