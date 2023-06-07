@@ -22,6 +22,11 @@ public class Produto {
 	@DecimalMin(value = "0.0", inclusive = false, message = "Preço mínimo positivo")
 	private BigDecimal preco;
 	
+	public Produto(String descricao, double preco) {
+		setDescricao(descricao);
+		setPreco(preco);
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -36,6 +41,10 @@ public class Produto {
 	
 	public BigDecimal getPreco() {
 		return preco;
+	}
+	
+	public void setPreco(double preco) {
+		this.preco = new BigDecimal(preco);
 	}
 	
 	public void setPreco(BigDecimal preco) {

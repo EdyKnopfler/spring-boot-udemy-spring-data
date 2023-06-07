@@ -27,6 +27,11 @@ public class ItemPedido {
 	@Min(1)
 	private int quantidade;
 	
+	public ItemPedido(Produto produto, int quantidade) {
+		setProduto(produto);
+		setQuantidade(quantidade);
+	}
+
 	public Long getId() {
 		return id;
 	}
