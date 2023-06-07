@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.derso.vendas.domain.Cliente;
 
@@ -25,6 +26,6 @@ public interface ClientesRepository extends JpaRepository<Cliente, Long> {
 	
 	// Customização do método
 	@Query("SELECT c FROM Cliente c WHERE UPPER(c.nome) LIKE '%' || UPPER(:nome) || '%'")
-	List<Cliente> encontrarPorNome(String nome);
+	List<Cliente> encontrarPorNome(@Param("nome") String nome);
 
 }
