@@ -9,6 +9,7 @@ import java.util.List;
 import javax.validation.constraints.DecimalMin;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,7 +28,7 @@ public class Pedido {
 	
 	private LocalDate data;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER)
 	private List<ItemPedido> itens = new ArrayList<>();
 	
 	@DecimalMin(value = "0.0", inclusive = false, message = "Total mínimo positivo")

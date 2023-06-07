@@ -22,6 +22,10 @@ public class Produto {
 	@DecimalMin(value = "0.0", inclusive = false, message = "Preço mínimo positivo")
 	private BigDecimal preco;
 	
+	public Produto() {
+		// O construtor default é importante caso façamos MERGE do objeto!
+	}
+	
 	public Produto(String descricao, double preco) {
 		setDescricao(descricao);
 		setPreco(preco);

@@ -21,11 +21,18 @@ public class ItemPedido {
 	@ManyToOne
 	private Produto produto;
 	
+	@ManyToOne
+	private Pedido pedido;
+	
 	@DecimalMin(value = "0.0", inclusive = false, message = "Preço mínimo positivo")
 	private BigDecimal precoCorrente;
 	
 	@Min(1)
 	private int quantidade;
+	
+	public ItemPedido() {
+		// O construtor default é importante caso façamos MERGE do objeto!
+	}
 	
 	public ItemPedido(Produto produto, int quantidade) {
 		setProduto(produto);
