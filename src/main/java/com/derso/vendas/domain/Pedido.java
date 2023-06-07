@@ -28,7 +28,7 @@ public class Pedido {
 	
 	private LocalDate data;
 	
-	@OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "pedido")
 	private List<ItemPedido> itens = new ArrayList<>();
 	
 	@DecimalMin(value = "0.0", inclusive = false, message = "Total mínimo positivo")
