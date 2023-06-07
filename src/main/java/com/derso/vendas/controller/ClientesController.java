@@ -30,12 +30,12 @@ public class ClientesController {
 	
 	@GetMapping
 	public List<Cliente> todos() {
-		return repositorio.obterTodos();
+		return repositorio.findAll();
 	}
 
 	@PostMapping
 	public void novoCliente(@RequestBody ClienteDTO clienteDto) {
-		repositorio.salvar(clienteDto.criar());
+		repositorio.save(clienteDto.criar());
 	}
 
 }
