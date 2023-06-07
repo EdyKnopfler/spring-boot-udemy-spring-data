@@ -31,7 +31,7 @@ public class Pedido {
 	private List<ItemPedido> itens = new ArrayList<>();
 	
 	@DecimalMin(value = "0.0", inclusive = false, message = "Total mínimo positivo")
-	private BigDecimal total;
+	private BigDecimal total = new BigDecimal("0.0");
 	
 	public Long getId() {
 		return id;
