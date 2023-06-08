@@ -66,6 +66,7 @@ public class ClientesController {
 	@DeleteMapping("/cpf/{cpf}")
 	@Transactional
 	public void deletarPorCpf(@PathVariable("cpf") String cpf) {
+		// Idealmente precisaríamos consultar para decidir se devolvemos 404 :P
 		repositorio.excluirPorCpf(cpf);
 	}
 

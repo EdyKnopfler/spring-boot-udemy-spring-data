@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -25,6 +27,7 @@ public class Cliente {
 	@Column(length = 11, unique = true)
 	private String cpf;
 	
+	@JsonIgnore  // não enviar os pedidos nas respostas HTTP :) 
 	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
 	private List<Pedido> pedidos = new ArrayList<>();
 	
