@@ -23,10 +23,7 @@ public class ClientesController {
 	
 	record ClienteDTO(String nome, String cpf) {
 		public Cliente criar() {
-			Cliente c = new Cliente();
-			c.setNome(nome);
-			c.setCpf(cpf);
-			return c;
+			return new Cliente(nome, cpf);
 		}
 	}
 
