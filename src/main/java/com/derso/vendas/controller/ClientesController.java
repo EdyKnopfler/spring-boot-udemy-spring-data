@@ -22,6 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.derso.vendas.domain.Cliente;
 import com.derso.vendas.repository.ClientesRepository;
 
+// @RestController = @Controller + @ResponseBody em todos os métodos
+// @ResponseBody = serializa automaticamente a resposta em JSON e empacota
+// em HttpResponse
+
 @RestController
 @RequestMapping("/clientes")
 public class ClientesController {
