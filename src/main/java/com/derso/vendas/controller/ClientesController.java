@@ -42,7 +42,6 @@ public class ClientesController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Cliente> porId(@PathVariable("id") long id) {
 		Optional<Cliente> cliente = repositorio.findById(id);
-		 
 		return cliente.isPresent()
 				? ResponseEntity.ok(cliente.get())
 				: ResponseEntity.notFound().build();
@@ -51,7 +50,6 @@ public class ClientesController {
 	@GetMapping("/cpf/{cpf}")
 	public ResponseEntity<Cliente> porCpf(@PathVariable("cpf") String cpf) {
 		Cliente cliente = repositorio.findOneByCpf(cpf);
-		
 		return cliente != null
 				? ResponseEntity.ok(cliente)
 				: ResponseEntity.notFound().build();
