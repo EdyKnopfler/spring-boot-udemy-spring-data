@@ -57,8 +57,10 @@ public class ClientesController {
 
 	@PostMapping
 	@Transactional
-	public void novoCliente(@RequestBody ClienteDTO clienteDto) {
-		repositorio.save(clienteDto.criar());
+	public ResponseEntity<Cliente> novoCliente(@RequestBody ClienteDTO clienteDto) {
+		Cliente cliente = clienteDto.criar();
+		repositorio.save(cliente);
+		return ResponseEntity.ok(cliente);
 	}
 	
 	@DeleteMapping("/cpf/{cpf}")
