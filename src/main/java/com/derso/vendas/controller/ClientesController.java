@@ -71,9 +71,9 @@ public class ClientesController {
 
 	@PostMapping
 	@Transactional
-	public ResponseEntity<Cliente> novoCliente(@RequestBody Cliente cliente) {
+	public Cliente novoCliente(@RequestBody Cliente cliente) {
 		repositorio.save(cliente);
-		return ResponseEntity.ok(cliente);
+		return cliente;  // Devolve com ID
 	}
 	
 	@PutMapping("/{id}")
