@@ -23,12 +23,6 @@ import com.derso.vendas.repository.ClientesRepository;
 @RequestMapping("/clientes")
 public class ClientesController {
 	
-	record ClienteDTO(String nome, String cpf) {
-		public Cliente criar() {
-			return new Cliente(nome, cpf);
-		}
-	}
-
 	@Autowired
 	private ClientesRepository repositorio;
 	
@@ -58,8 +52,7 @@ public class ClientesController {
 
 	@PostMapping
 	@Transactional
-	public ResponseEntity<Cliente> novoCliente(@RequestBody ClienteDTO clienteDto) {
-		Cliente cliente = clienteDto.criar();
+	public ResponseEntity<Cliente> novoCliente(@RequestBody Cliente cliente) {
 		repositorio.save(cliente);
 		return ResponseEntity.ok(cliente);
 	}
@@ -90,11 +83,8 @@ public class ClientesController {
 	}
 	
 	@GetMapping("/hello-object/{id}")
-	public ClienteDTO helloObject(@PathVariable("id") long id) {
-		Cliente cliente = repositorio.findById(id).orElse(new Cliente("Ninguém", ""));
-		
-		// Está feio mas é para fins didáticos
-		return new ClienteDTO(cliente.getNome(), cliente.getCpf());
+	public Cliente helloObject(@PathVariable("id") long id) {
+		return repositorio.findById(id).orElse(new Cliente("Ninguém", ""));
 	}
 	
 }
