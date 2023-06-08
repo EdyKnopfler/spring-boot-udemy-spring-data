@@ -46,7 +46,7 @@ public class Cliente {
 		this.cpf = cpf;
 	}
 	
-	public List<Pedido> get Pedidos() {
+	public List<Pedido> getPedidos() {
 		return Collections.unmodifiableList(pedidos);
 	}
 	
