@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.derso.vendas.domain.Cliente;
@@ -77,6 +79,7 @@ public class ClientesController {
 
 	@PostMapping
 	@Transactional
+	@ResponseStatus(HttpStatus.CREATED)  // Em caso de sucesso
 	public Cliente novoCliente(@RequestBody Cliente cliente) {
 		repositorio.save(cliente);
 		return cliente;  // Devolve com ID
@@ -94,6 +97,7 @@ public class ClientesController {
 	
 	@DeleteMapping("/cpf/{cpf}")
 	@Transactional
+	@ResponseStatus(HttpStatus.NO_CONTENT)  // Em caso de sucesso :)
 	public void deletarPorCpf(@PathVariable("cpf") String cpf) {
 		// Idealmente precisaríamos consultar para decidir se devolvemos 404 :P
 		repositorio.excluirPorCpf(cpf);
