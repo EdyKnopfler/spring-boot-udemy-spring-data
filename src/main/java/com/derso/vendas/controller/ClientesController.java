@@ -1,6 +1,7 @@
 package com.derso.vendas.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,4 +57,12 @@ public class ClientesController {
 		repositorio.excluirPorCpf(cpf);
 	}
 
+	@GetMapping("/hello/{id}")
+	public String hello(@PathVariable("id") long id) {
+		Optional<Cliente> cliente = repositorio.findById(id);
+		return String.format(
+				"Hellô, %s, seu paidégua", 
+				cliente.orElse(new Cliente("Ninguém", "")).getNome());
+	}
+	
 }
