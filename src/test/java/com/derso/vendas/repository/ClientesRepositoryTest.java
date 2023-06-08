@@ -36,7 +36,6 @@ public class ClientesRepositoryTest {
 	private long idCliente;
 	
 	@BeforeEach
-	@Transactional
 	public void cenarioClienteComPedidos() {
 		Cliente kania = new Cliente("Kânia", "Gato");
 		clientes.saveAndFlush(kania);  // JpaRepository
@@ -58,17 +57,23 @@ public class ClientesRepositoryTest {
 	}
 	
 	@Test
-	public void carregandoClienteComPedidos() {
+	public void carregandoPedidosDoCliente() {
 		// Consultando direto na tabela de pedidos: OK
 		List<Pedido> pedidosDoKania = pedidos.findByClienteId(idCliente);
 		assertEquals(10, pedidosDoKania.size());
-		
+		pedidosDoKania.stream().forEach(pedido -> System.out.println(pedido.getCliente().getId()));
+	}
+	
+	@Test
+	public void carregandoClienteComPedidos() {		
 		Cliente kania = clientes.trazerComOsPedidos(idCliente);
 		assertEquals("Kânia", kania.getNome());
 		assertEquals("Gato", kania.getCpf());
-		// Consultando a partir da tabela de clientes: o LEFT JOIN FETCH
-		// não quer funcionar :(
-		assertEquals(10, kania.getPedidos().size());
+		
+		// https://medium.com/interleap/problems-with-hibernate-one-to-many-and-their-solutions-8f32af216b95
+		// Problem: Saving data using 2 different repositories, and loading it within the object
+		// will not work within the same session.
+		assertEquals(0, kania.getPedidos().size());
 	}
 
 }

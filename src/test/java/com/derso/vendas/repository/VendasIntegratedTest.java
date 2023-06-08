@@ -33,7 +33,6 @@ class VendasIntegratedTest {
 	private EntityManager em;
 
 	@BeforeEach
-	@Transactional
 	public void criandoPedido() {
 		// Produtos (@ManyToOne no Pedido) NÃO foram persistidos junto com o pedido!
 		Produto geladeira = new Produto("Geladeira", 5900.0);
@@ -92,7 +91,6 @@ class VendasIntegratedTest {
 	}
 	
 	@Test
-	@Transactional
 	public void alterandoItem() {
 		Produto televisor = em
 			.createQuery(
