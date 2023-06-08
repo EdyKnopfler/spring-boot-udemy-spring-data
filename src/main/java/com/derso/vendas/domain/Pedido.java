@@ -28,12 +28,21 @@ public class Pedido {
 	
 	private LocalDate data;
 	
-	@OneToMany(mappedBy = "pedido")
+	@OneToMany(mappedBy = "pedido", fetch = FetchType.LAZY)
 	private List<ItemPedido> itens = new ArrayList<>();
 	
 	@DecimalMin(value = "0.0", inclusive = false, message = "Total mínimo positivo")
 	private BigDecimal total = new BigDecimal("0.0");
 	
+	public Pedido() {
+		// O construtor default é importante caso façamos MERGE do objeto!
+	}
+	
+	public Pedido(Cliente cliente, LocalDate data) {
+		setCliente(cliente);
+		setData(data);
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -63,13 +72,13 @@ public class Pedido {
 		total = total.add(item.getTotalItem());
 	}
 	
-	public List<ItemPedido> getItens() {
-		return Collections.unmodifiableList(itens);
-	}
-	
 	public void removerItem(int posicao) {
 		ItemPedido removido = itens.remove(posicao);
 		total = total.subtract(removido.getTotalItem());
 	}
 
+	public List<ItemPedido> getItens() {
+		return Collections.unmodifiableList(itens);
+	}
+	
 }

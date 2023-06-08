@@ -1,10 +1,12 @@
 package com.derso.vendas.domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,8 +25,17 @@ public class Cliente {
 	@Column(length = 11, unique = true)
 	private String cpf;
 	
-	@OneToMany(mappedBy = "cliente")
-	private List<Pedido> pedidos;
+	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
+	private List<Pedido> pedidos = new ArrayList<>();
+	
+	public Cliente() {
+		// O construtor default é importante caso façamos MERGE do objeto!
+	}
+	
+	public Cliente(String nome, String cpf) {
+		setNome(nome);
+		setCpf(cpf);
+	}
 	
 	public Long getId() {
 		return id;
