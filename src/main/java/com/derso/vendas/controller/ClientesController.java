@@ -63,4 +63,12 @@ public class ClientesController {
 				cliente.orElse(new Cliente("Ninguém", "")).getNome());
 	}
 	
+	@GetMapping("/hello-object/{id}")
+	public ClienteDTO helloObject(@PathVariable("id") long id) {
+		Cliente cliente = repositorio.findById(id).orElse(new Cliente("Ninguém", ""));
+		
+		// Está feio mas é para fins didáticos
+		return new ClienteDTO(cliente.getNome(), cliente.getCpf());
+	}
+	
 }
