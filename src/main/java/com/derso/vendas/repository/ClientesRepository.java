@@ -33,10 +33,6 @@ public interface ClientesRepository extends JpaRepository<Cliente, Long> {
 	@Modifying
 	void excluirPorCpf(@Param("cpf") String cpf);
 	
-	@Query("UPDATE Cliente c SET c.nome = :nome, c.cpf = :cpf WHERE c.id = :id")
-	@Modifying
-	void atualizaPorId(@Param("id") long id, @Param("nome") String nome, @Param("cpf") String cpf);
-	
 	// FETCH
 	// @OneToMany é LAZY por default
 	@Query("SELECT c FROM Cliente c LEFT JOIN FETCH c.pedidos p WHERE c.id = :id")

@@ -43,6 +43,12 @@ public class Cliente {
 	public Long getId() {
 		return id;
 	}
+	
+	public void setId(Long id) {
+		// Estava evitando usar o setId mas facilita N coisas
+		// (ver ClientesController)
+		this.id = id;
+	}
 
 	public String getNome() {
 		return nome;

@@ -66,10 +66,12 @@ public class ClientesController {
 	
 	@PutMapping("/{id}")
 	@Transactional
-	public void atualizarCliente(@PathVariable("id") long id, @RequestBody ClienteDTO clienteDto) {
-		// Até parece que vou sair fazendo SELECT + UPDATE :P
-		// (findById + setNome + setCpf + flush/commit)
-		repositorio.atualizaPorId(id, clienteDto.nome, clienteDto.cpf);
+	public void atualizarCliente(@PathVariable("id") long id, @RequestBody Cliente cliente) {
+		// Não queria criar este setter mas facilita bastante alguns usos do ORM
+		// Não precisamos ficar copiando atributos, recebemos um Cliente na
+		// requisição e setamos o id para fazer o .save()
+		cliente.setId(id);
+		repositorio.save(cliente);
 	}
 	
 	@DeleteMapping("/cpf/{cpf}")
