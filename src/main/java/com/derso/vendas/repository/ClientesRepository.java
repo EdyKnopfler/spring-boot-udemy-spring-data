@@ -34,7 +34,7 @@ public interface ClientesRepository extends JpaRepository<Cliente, Long> {
 	void excluirPorCpf(@Param("cpf") String cpf);
 	
 	// FETCH
-	// @OneToMany dos pedidos é LAZY (default)
+	// @OneToMany é LAZY por default
 	@Query("SELECT c FROM Cliente c LEFT JOIN FETCH c.pedidos p WHERE c.id = :id")
 	Cliente trazerComOsPedidos(@Param("id") long id);
 
