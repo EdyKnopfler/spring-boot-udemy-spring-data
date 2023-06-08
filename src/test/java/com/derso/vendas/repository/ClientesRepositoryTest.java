@@ -73,6 +73,7 @@ public class ClientesRepositoryTest {
 		// https://medium.com/interleap/problems-with-hibernate-one-to-many-and-their-solutions-8f32af216b95
 		// Problem: Saving data using 2 different repositories, and loading it within the object
 		// will not work within the same session.
+		// (se o @Transactional funcionasse aqui nos testes, não haveria esse problema)
 		assertEquals(0, kania.getPedidos().size());
 	}
 
