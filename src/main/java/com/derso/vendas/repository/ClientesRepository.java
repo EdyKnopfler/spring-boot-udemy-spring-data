@@ -30,8 +30,8 @@ public interface ClientesRepository extends JpaRepository<Cliente, Long> {
 	List<Cliente> encontrarPorNome(@Param("nome") String nome);
 	
 	@Query("DELETE FROM Cliente c WHERE c.cpf = :cpf")
-	@Modifying
-	void excluirPorCpf(@Param("cpf") String cpf);
+	@Modifying  // int devolverá a quantidade excluída 
+	int excluirPorCpf(@Param("cpf") String cpf);
 	
 	// FETCH
 	// @OneToMany é LAZY por default
