@@ -44,6 +44,7 @@ public class ClientesController {
 	}
 
 	@PostMapping
+	@Transactional
 	public void novoCliente(@RequestBody ClienteDTO clienteDto) {
 		repositorio.save(clienteDto.criar());
 	}
