@@ -64,7 +64,7 @@ public class ClientesController {
 		// Outra forma é fazer a função devolver somente o tipo Cliente
 		// e lançar alguma exceção que faça o Spring controlar a resposta, ex.:
 		
-		// throw new ResponseSTatusException("Cliente não encontrado", HttpStatus.NOT_FOUND);
+		// throw new ResponseStatusException("Cliente não encontrado", HttpStatus.NOT_FOUND);
 	}
 	
 	@GetMapping("/cpf/{cpf}")
