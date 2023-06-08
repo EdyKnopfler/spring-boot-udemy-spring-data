@@ -39,15 +39,14 @@ public class ClientesController {
 	
 	// GET com objeto: já traduz os parâmetros nome, cpf, etc. na query string
 	@GetMapping("/example")
-	public ResponseEntity<List<Cliente>> listarUsandoExample(Cliente filtro) {
+	public List<Cliente> listarUsandoExample(Cliente filtro) {
 		// Examples: realizando consultas a partir de um objeto
 		ExampleMatcher matcher = ExampleMatcher
 				.matching()
 				.withIgnoreCase()  // todos os atributos String :)
 				.withStringMatcher(StringMatcher.CONTAINING);
 		Example<Cliente> example = Example.of(filtro, matcher);
-		List<Cliente> clientes = repositorio.findAll(example);
-		return ResponseEntity.ok(clientes);
+		return repositorio.findAll(example);
 	}
 	
 	@GetMapping("/{id}")
