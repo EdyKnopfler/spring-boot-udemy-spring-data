@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,6 +62,14 @@ public class ClientesController {
 		Cliente cliente = clienteDto.criar();
 		repositorio.save(cliente);
 		return ResponseEntity.ok(cliente);
+	}
+	
+	@PutMapping("/{id}")
+	@Transactional
+	public void atualizarCliente(@PathVariable("id") long id, @RequestBody ClienteDTO clienteDto) {
+		// Até parece que vou sair fazendo SELECT + UPDATE :P
+		// (findById + setNome + setCpf + flush/commit)
+		repositorio.atualizaPorId(id, clienteDto.nome, clienteDto.cpf);
 	}
 	
 	@DeleteMapping("/cpf/{cpf}")
