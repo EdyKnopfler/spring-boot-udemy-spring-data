@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.derso.vendas.domain.Cliente;
 import com.derso.vendas.repository.ClientesRepository;
@@ -66,7 +67,7 @@ public class ClientesController {
 		// Outra forma é fazer a função devolver somente o tipo Cliente
 		// e lançar alguma exceção que faça o Spring controlar a resposta, ex.:
 		
-		// throw new ResponseStatusException("Cliente não encontrado", HttpStatus.NOT_FOUND);
+		// throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado");
 	}
 	
 	@GetMapping("/cpf/{cpf}")
@@ -99,8 +100,18 @@ public class ClientesController {
 	@Transactional
 	@ResponseStatus(HttpStatus.NO_CONTENT)  // Em caso de sucesso :)
 	public void deletarPorCpf(@PathVariable("cpf") String cpf) {
-		// Idealmente precisaríamos consultar para decidir se devolvemos 404 :P
-		repositorio.excluirPorCpf(cpf);
+		// Aqui temos o ápice da eficiência e simplicidade: executamos diretamente
+		// um DELETE sem precisar consultar antes, devolvemos o código apropriado
+		// e o método não precisa devolver tipos estranhos
+		
+		// Desvantagem: a stack trace da exception vai toda para a resposta, razão
+		// porque um ResponseEntity pode ser preferível
+		
+		int qtdLinhas = repositorio.excluirPorCpf(cpf);
+		
+		if (qtdLinhas == 0) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CPF não encontrado");
+		}
 	}
 
 	@GetMapping("/hello/{id}")
