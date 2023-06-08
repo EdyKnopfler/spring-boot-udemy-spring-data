@@ -53,12 +53,18 @@ public class ClientesController {
 		return repositorio.findAll(example);
 	}
 	
+	// ResponseEntity: uma forma de controlar a resposta
 	@GetMapping("/{id}")
 	public ResponseEntity<Cliente> porId(@PathVariable("id") long id) {
 		Optional<Cliente> cliente = repositorio.findById(id);
 		return cliente.isPresent()
 				? ResponseEntity.ok(cliente.get())
 				: ResponseEntity.notFound().build();
+		
+		// Outra forma é fazer a função devolver somente o tipo Cliente
+		// e lançar alguma exceção que faça o Spring controlar a resposta, ex.:
+		
+		// throw new ResponseSTatusException("Cliente não encontrado", HttpStatus.NOT_FOUND);
 	}
 	
 	@GetMapping("/cpf/{cpf}")
