@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,6 +35,19 @@ public class ClientesController {
 				//? repositorio.findByNomeLikeIgnoreCase("%" + nomeBusca + "%")
 				? repositorio.encontrarPorNome(nomeBusca)
 				: repositorio.findAll();
+	}
+	
+	// GET com objeto: já traduz os parâmetros nome, cpf, etc. na query string
+	@GetMapping("/example")
+	public ResponseEntity<List<Cliente>> listarUsandoExample(Cliente filtro) {
+		// Examples: realizando consultas a partir de um objeto
+		ExampleMatcher matcher = ExampleMatcher
+				.matching()
+				.withIgnoreCase()  // todos os atributos String :)
+				.withStringMatcher(StringMatcher.CONTAINING);
+		Example<Cliente> example = Example.of(filtro, matcher);
+		List<Cliente> clientes = repositorio.findAll(example);
+		return ResponseEntity.ok(clientes);
 	}
 	
 	@GetMapping("/{id}")
