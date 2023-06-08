@@ -32,5 +32,10 @@ public interface ClientesRepository extends JpaRepository<Cliente, Long> {
 	@Query("DELETE FROM Cliente c WHERE c.cpf = :cpf")
 	@Modifying
 	void excluirPorCpf(@Param("cpf") String cpf);
+	
+	// FETCH
+	// @OneToMany dos pedidos é LAZY (default)
+	@Query("SELECT c FROM Cliente c LEFT JOIN FETCH c.pedidos p WHERE c.id = :id")
+	Cliente trazerComOsPedidos(@Param("id") long id);
 
 }
