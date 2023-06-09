@@ -38,7 +38,12 @@
 			<artifactId>h2</artifactId>
 		</dependency>
 
-		<!-- Foi necessário para o servlet do H2 Console funcionar -->
+		<!--
+			Foi necessário para o servlet do H2 Console funcionar.
+			
+			Também faz rebuild e reload automáticos do projeto quando
+			um arquivo é alterado.
+		-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
