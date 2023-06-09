@@ -47,7 +47,7 @@ public class ProdutosController {
 	}
 	
 	@GetMapping
-	private List<Produto> listagem(
+	public List<Produto> listagem(
 			@RequestParam(name = "busca", required = false) String buscaDescricao) {
 		return buscaDescricao != null
 				? repositorio.findByDescricaoLikeIgnoreCaseOrderByDescricao(
@@ -56,7 +56,7 @@ public class ProdutosController {
 	}
 	
 	@GetMapping("/{id}")
-	private ResponseEntity<Produto> porId(@PathVariable("id") long id) {
+	public ResponseEntity<Produto> porId(@PathVariable("id") long id) {
 		Optional<Produto> produto = repositorio.findById(id);
 		return produto.isPresent()
 				? ResponseEntity.ok(produto.get())
