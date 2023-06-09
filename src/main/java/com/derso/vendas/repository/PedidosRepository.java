@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -51,7 +52,14 @@ public interface PedidosRepository extends JpaRepository<Pedido, Long> {
 			Pageable pageable);
 	
 	// Query com projeção: não entendeu "p.data" como "data"
-	@Query("SELECT p.data AS data, SUM(p.total) AS total FROM Pedido p")
+	@Query(
+		"SELECT p.data AS data, SUM(p.total) AS total " +
+		"FROM Pedido p " +
+		"WHERE p.status = 'REALIZADO'")
 	public List<ResumoPedidosProject> resumoPedidos();
+	
+	@Query("UPDATE Pedido p SET p.status = :status WHERE p.id = :id")
+	@Modifying
+	public int mudarStatus(@Param("id") long id, @Param("status") String status);
 
 }

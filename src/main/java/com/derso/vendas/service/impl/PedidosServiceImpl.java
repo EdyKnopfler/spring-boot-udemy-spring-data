@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.derso.vendas.domain.Cliente;
 import com.derso.vendas.domain.ItemPedido;
 import com.derso.vendas.domain.Pedido;
+import com.derso.vendas.domain.Pedido.StatusPedido;
 import com.derso.vendas.domain.Produto;
 import com.derso.vendas.dto.PedidoRequestDTO;
 import com.derso.vendas.dto.ResumoPedidosProject;
@@ -60,6 +61,7 @@ public class PedidosServiceImpl implements PedidosService {
 		Pedido pedido = new Pedido();
 		pedido.setCliente(cliente);
 		pedido.setData(LocalDate.now());
+		pedido.setStatus(StatusPedido.REALIZADO);
 		popularItens(dadosPedido, produtos, pedido);
 		pedidosRepo.save(pedido);
 		itensRepo.saveAll(pedido.getItens());  // FUCKING SHIT!
@@ -142,6 +144,13 @@ public class PedidosServiceImpl implements PedidosService {
 	@Override
 	public List<ResumoPedidosProject> resumoPedidos() {
 		return pedidosRepo.resumoPedidos();
+	}
+
+	@Override
+	@Transactional
+	public boolean atualizarStatus(long id, StatusPedido novoStatus) {
+		int modificadas = pedidosRepo.mudarStatus(id, novoStatus.name());
+		return modificadas > 0;
 	}
 	
 }

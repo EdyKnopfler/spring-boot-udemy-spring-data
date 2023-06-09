@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.derso.vendas.domain.Pedido;
+import com.derso.vendas.domain.Pedido.StatusPedido;
 import com.derso.vendas.dto.PedidoRequestDTO;
 import com.derso.vendas.dto.ResumoPedidosProject;
 
@@ -24,5 +25,7 @@ public interface PedidosService {
 	Optional<Pedido> porId(long id);
 	
 	List<ResumoPedidosProject> resumoPedidos();
+	
+	boolean atualizarStatus(long id, StatusPedido novoStatus);
 
 }

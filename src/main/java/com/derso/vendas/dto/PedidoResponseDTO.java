@@ -13,7 +13,8 @@ public record PedidoResponseDTO(
 	String cpf,
 	LocalDate data,
 	BigDecimal total,
-	List<ItemPedidoResponseDTO> itens) {
+	List<ItemPedidoResponseDTO> itens,
+	String status) {
 	
 	public static PedidoResponseDTO criarPara(Pedido pedido) {
 		return new PedidoResponseDTO(
@@ -26,7 +27,8 @@ public record PedidoResponseDTO(
 				pedido.getItens()
 						.stream()
 						.map(item -> ItemPedidoResponseDTO.criarPara(item))
-						.toList()
+						.toList(),
+				pedido.getStatus().name()
 		);
 	}
 

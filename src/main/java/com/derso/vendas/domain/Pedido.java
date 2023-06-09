@@ -8,7 +8,10 @@ import java.util.List;
 
 import javax.validation.constraints.DecimalMin;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,6 +21,11 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class Pedido {
+	
+	public enum StatusPedido {
+		REALIZADO,
+		CANCELADO
+	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,6 +41,12 @@ public class Pedido {
 	
 	@DecimalMin(value = "0.0", inclusive = false, message = "Total mínimo positivo")
 	private BigDecimal total = new BigDecimal("0.0");
+	
+	// A adição da coluna requereu a execução de uma manutenção:
+	// update pedido set status = 'REALIZADO'
+	@Enumerated(EnumType.STRING)
+	@Column(columnDefinition = "default 'REALIZADO")
+	private StatusPedido status;
 	
 	public Pedido() {
 		// O construtor default é importante caso façamos MERGE do objeto!
@@ -80,6 +94,14 @@ public class Pedido {
 
 	public List<ItemPedido> getItens() {
 		return Collections.unmodifiableList(itens);
+	}
+
+	public StatusPedido getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusPedido status) {
+		this.status = status;
 	}
 	
 }

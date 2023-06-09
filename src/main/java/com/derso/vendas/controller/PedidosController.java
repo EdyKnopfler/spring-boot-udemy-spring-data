@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,7 @@ import com.derso.vendas.dto.PedidoRequestDTO;
 import com.derso.vendas.dto.PedidoResponseDTO;
 import com.derso.vendas.dto.PedidoResponseOkDTO;
 import com.derso.vendas.dto.ResumoPedidosProject;
+import com.derso.vendas.dto.StatusPedidoRequestDTO;
 import com.derso.vendas.service.PedidosException;
 import com.derso.vendas.service.PedidosService;
 
@@ -67,6 +69,19 @@ public class PedidosController {
 	@GetMapping("/resumo")
 	public List<ResumoPedidosProject> resumo() {
 		return servico.resumoPedidos();
+	}
+	
+	// PATCH: atualização parcial (atualizar somente um campo)
+	@PatchMapping("/{id}/status")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public PedidoResponseOkDTO atualizarStatus(
+			@PathVariable("id") long id, 
+			@RequestBody StatusPedidoRequestDTO novoStatus) {
+		if (servico.atualizarStatus(id, novoStatus.status())) {
+			return new PedidoResponseOkDTO("ok", id);
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	private List<PedidoResponseDTO> formatarPedidos(List<Pedido> pedidos) {
