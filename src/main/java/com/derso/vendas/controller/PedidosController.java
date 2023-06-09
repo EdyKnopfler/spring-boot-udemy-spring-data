@@ -1,8 +1,12 @@
 package com.derso.vendas.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,13 +36,17 @@ public class PedidosController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<PedidoResponseDTO> novo(@RequestBody PedidoDTO dadosPedido) {
 		try {
-			Pedido pedido;
-			pedido = servico.novoPedido(dadosPedido);
+			Pedido pedido = servico.novoPedido(dadosPedido);
 			return ResponseEntity.ok(new PedidoResponseOkDTO("ok", pedido.getId()));
 		} catch (PedidosException e) {
 			return ResponseEntity
 				.badRequest().body(new PedidoResponseErrorDTO("erro", e.getMessage(), e.getIds()));
 		}
+	}
+	
+	@GetMapping("/do-cliente/{clienteId}")
+	public List<Pedido> pedidosDoCliente(@PathVariable("clienteId") long clienteId) {
+		return servico.pedidosDoCliente(clienteId);
 	}
 	
 }

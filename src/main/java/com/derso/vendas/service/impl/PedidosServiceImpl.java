@@ -114,5 +114,10 @@ public class PedidosServiceImpl implements PedidosService {
 			throw new PedidosException("Totais de itens não correspondem", totaisNaoCorrespondem);
 		}
 	}
+
+	@Override
+	public List<Pedido> pedidosDoCliente(long clienteId) {
+		return pedidosRepo.pedidosDoCliente(clienteId);
+	}
 	
 }
