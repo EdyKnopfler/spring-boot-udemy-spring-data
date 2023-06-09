@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.derso.vendas.domain.Pedido;
 import com.derso.vendas.dto.PedidoDTO;
 import com.derso.vendas.dto.PedidoResponseDTO;
-import com.derso.vendas.dto.PedidoResponseErrorDTO;
 import com.derso.vendas.dto.PedidoResponseOkDTO;
 import com.derso.vendas.service.PedidosException;
 import com.derso.vendas.service.PedidosService;
@@ -34,14 +33,9 @@ public class PedidosController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<PedidoResponseDTO> novo(@RequestBody PedidoDTO dadosPedido) {
-		try {
-			Pedido pedido = servico.novoPedido(dadosPedido);
-			return ResponseEntity.ok(new PedidoResponseOkDTO("ok", pedido.getId()));
-		} catch (PedidosException e) {
-			return ResponseEntity
-				.badRequest().body(new PedidoResponseErrorDTO("erro", e.getMessage(), e.getIds()));
-		}
+	public ResponseEntity<PedidoResponseDTO> novo(@RequestBody PedidoDTO dadosPedido) throws PedidosException {
+		Pedido pedido = servico.novoPedido(dadosPedido);
+		return ResponseEntity.ok(new PedidoResponseOkDTO("ok", pedido.getId()));
 	}
 	
 	@GetMapping("/do-cliente/{clienteId}")
