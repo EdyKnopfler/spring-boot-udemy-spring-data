@@ -93,7 +93,7 @@ public class PedidosServiceImpl implements PedidosService {
 			ItemPedido item = new ItemPedido(
 					produtos.get(dadosItem.produtoId()), dadosItem.quantidade());
 			
-			if (Math.abs(dadosItem.totalEsperado() - item.getTotalItem().floatValue()) < 0.001) {
+			if (Math.abs(dadosItem.totalEsperado() - item.getTotalItem().floatValue()) >= 0.001) {
 				totaisNaoCorrespondem.add(dadosItem.produtoId());
 			}
 			
