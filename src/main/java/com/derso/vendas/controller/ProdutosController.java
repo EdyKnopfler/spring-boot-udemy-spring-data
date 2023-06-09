@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.derso.vendas.domain.Produto;
@@ -66,6 +68,7 @@ public class ProdutosController {
 	
 	@PostMapping
 	@Transactional
+	@ResponseStatus(HttpStatus.CREATED)
 	public Produto novo(@RequestBody Produto produto) {
 		repositorio.save(produto);
 		return produto;
@@ -73,6 +76,7 @@ public class ProdutosController {
 	
 	@PutMapping("/{id}")
 	@Transactional
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void atualizar(@PathVariable("id") long id, @RequestBody Produto produto) {
 		produto.setId(id);
 		repositorio.save(produto);
@@ -80,6 +84,7 @@ public class ProdutosController {
 	
 	@DeleteMapping("/{id}")
 	@Transactional
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable("id") long id) {
 		repositorio.deleteById(id);
 	}
