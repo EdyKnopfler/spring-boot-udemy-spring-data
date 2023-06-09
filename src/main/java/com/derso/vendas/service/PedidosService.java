@@ -1,5 +1,6 @@
 package com.derso.vendas.service;
 
+import com.derso.vendas.domain.Pedido;
 import com.derso.vendas.dto.PedidoDTO;
 
 /*
@@ -9,6 +10,6 @@ import com.derso.vendas.dto.PedidoDTO;
 
 public interface PedidosService {
 
-	void novoPedido(PedidoDTO dadosPedido);
+	Pedido novoPedido(PedidoDTO dadosPedido) throws PedidosException;
 
 }
