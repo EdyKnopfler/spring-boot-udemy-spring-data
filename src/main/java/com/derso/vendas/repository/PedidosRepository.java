@@ -20,7 +20,12 @@ public interface PedidosRepository extends JpaRepository<Pedido, Long> {
 	 *  - spring.jpa.properties.hibernate.format_sql=true
 	 * Fazem realmente MUITA DIFERENÇA para otimizar queries.
 	 */
-	@Query("SELECT p FROM Pedido p JOIN FETCH p.itens i JOIN FETCH i.produto WHERE p.cliente.id = :clienteId")
+	@Query(
+		"SELECT p FROM Pedido p " +
+		"JOIN FETCH p.cliente c " +
+		"JOIN FETCH p.itens i " +
+		"JOIN FETCH i.produto " +
+		"WHERE c.id = :clienteId")
 	List<Pedido> pedidosDoCliente(@Param("clienteId") long clienteId);
 
 }
