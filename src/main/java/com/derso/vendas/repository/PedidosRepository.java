@@ -12,7 +12,15 @@ public interface PedidosRepository extends JpaRepository<Pedido, Long> {
 	
 	List<Pedido> findByClienteId(long idCliente);
 
-	@Query("SELECT p FROM Pedido p JOIN FETCH ItemPedido i WHERE p.cliente.id = :clienteId")
+	/*
+	 * Evitando ao máximo disparar queries para o banco de dados!
+	 * 
+	 * As configurações:
+	 *  - spring.jpa.show-sql=true
+	 *  - spring.jpa.properties.hibernate.format_sql=true
+	 * Fazem realmente MUITA DIFERENÇA para otimizar queries.
+	 */
+	@Query("SELECT p FROM Pedido p JOIN FETCH p.itens i JOIN FETCH i.produto WHERE p.cliente.id = :clienteId")
 	List<Pedido> pedidosDoCliente(@Param("clienteId") long clienteId);
 
 }
