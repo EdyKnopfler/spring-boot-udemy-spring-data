@@ -24,7 +24,7 @@ public interface PedidosRepository extends JpaRepository<Pedido, Long> {
 		"SELECT p FROM Pedido p " +
 		"JOIN FETCH p.cliente c " +
 		"JOIN FETCH p.itens i " +
-		"JOIN FETCH i.produto " +
+		"JOIN FETCH i.produto pr " +
 		"WHERE c.id = :clienteId")
 	List<Pedido> pedidosDoCliente(@Param("clienteId") long clienteId);
 
