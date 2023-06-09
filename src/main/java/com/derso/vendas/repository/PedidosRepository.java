@@ -1,7 +1,10 @@
 package com.derso.vendas.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -27,5 +30,7 @@ public interface PedidosRepository extends JpaRepository<Pedido, Long> {
 		"JOIN FETCH i.produto pr " +
 		"WHERE c.id = :clienteId")
 	List<Pedido> pedidosDoCliente(@Param("clienteId") long clienteId);
+
+	Page<Pedido> findByDataBetween(LocalDate inicio, LocalDate fim, Pageable pageable);
 
 }

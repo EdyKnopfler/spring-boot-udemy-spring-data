@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -120,6 +122,14 @@ public class PedidosServiceImpl implements PedidosService {
 	@Override
 	public List<Pedido> pedidosDoCliente(long clienteId) {
 		return pedidosRepo.pedidosDoCliente(clienteId);
+	}
+
+	@Override
+	public List<Pedido> pedidosDoPeriodo(
+			@Param("inicio") LocalDate inicio, @Param("fim") LocalDate fim, int pagina) {
+		// Exemplo de PAGINAÇÃO
+		return pedidosRepo.findByDataBetween(
+				inicio, fim, Pageable.ofSize(5).withPage(pagina)).toList();
 	}
 	
 }

@@ -1,5 +1,6 @@
 package com.derso.vendas.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.derso.vendas.domain.Pedido;
@@ -15,5 +16,7 @@ public interface PedidosService {
 	Pedido novoPedido(PedidoRequestDTO dadosPedido) throws PedidosException;
 
 	List<Pedido> pedidosDoCliente(long clienteId);
+
+	List<Pedido> pedidosDoPeriodo(LocalDate inicio, LocalDate fim, int pagina);
 
 }
