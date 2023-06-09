@@ -1,5 +1,6 @@
 package com.derso.vendas.service.impl;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -93,7 +94,12 @@ public class PedidosServiceImpl implements PedidosService {
 			ItemPedido item = new ItemPedido(
 					produtos.get(dadosItem.produtoId()), dadosItem.quantidade());
 			
-			if (Math.abs(dadosItem.totalEsperado() - item.getTotalItem().floatValue()) >= 0.001) {
+			System.out.println(BigDecimal.valueOf(dadosItem.totalEsperado()));
+			System.out.println(item.getTotalItem());
+			
+			// BigDecimal.equals também compara a escala!
+			// https://medium.com/beingabetterdeveloper/comparing-bigdecimal-s-with-different-scales-2901bf26538f
+			if (BigDecimal.valueOf(dadosItem.totalEsperado()).compareTo(item.getTotalItem()) != 0) {
 				totaisNaoCorrespondem.add(dadosItem.produtoId());
 			}
 			
