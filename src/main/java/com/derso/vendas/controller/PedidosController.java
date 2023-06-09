@@ -20,6 +20,7 @@ import com.derso.vendas.domain.Pedido;
 import com.derso.vendas.dto.PedidoRequestDTO;
 import com.derso.vendas.dto.PedidoResponseDTO;
 import com.derso.vendas.dto.PedidoResponseOkDTO;
+import com.derso.vendas.dto.ResumoPedidosProject;
 import com.derso.vendas.service.PedidosException;
 import com.derso.vendas.service.PedidosService;
 
@@ -61,6 +62,11 @@ public class PedidosController {
 			@RequestParam(name="pagina", required=false) Integer pagina) {
 		pagina = pagina != null ? pagina - 1 : 0;
 		return formatarPedidos(servico.pedidosDoPeriodo(inicio, fim, pagina));
+	}
+	
+	@GetMapping("/resumo")
+	public List<ResumoPedidosProject> resumo() {
+		return servico.resumoPedidos();
 	}
 	
 	private List<PedidoResponseDTO> formatarPedidos(List<Pedido> pedidos) {

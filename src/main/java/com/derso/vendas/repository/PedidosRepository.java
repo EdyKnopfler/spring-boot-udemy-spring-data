@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.derso.vendas.domain.Pedido;
+import com.derso.vendas.dto.ResumoPedidosProject;
 
 public interface PedidosRepository extends JpaRepository<Pedido, Long> {
 	
@@ -48,5 +49,9 @@ public interface PedidosRepository extends JpaRepository<Pedido, Long> {
 			@Param("inicio") LocalDate inicio, 
 			@Param("fim") LocalDate fim, 
 			Pageable pageable);
+	
+	// Query com projeção: não entendeu "p.data" como "data"
+	@Query("SELECT p.data AS data, SUM(p.total) AS total FROM Pedido p")
+	public List<ResumoPedidosProject> resumoPedidos();
 
 }

@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.derso.vendas.domain.Pedido;
 import com.derso.vendas.dto.PedidoRequestDTO;
+import com.derso.vendas.dto.ResumoPedidosProject;
 
 /*
  * "Pedidos" é mais complexo e agregará mais repositórios.
@@ -21,5 +22,7 @@ public interface PedidosService {
 	List<Pedido> pedidosDoPeriodo(LocalDate inicio, LocalDate fim, int pagina);
 
 	Optional<Pedido> porId(long id);
+	
+	List<ResumoPedidosProject> resumoPedidos();
 
 }

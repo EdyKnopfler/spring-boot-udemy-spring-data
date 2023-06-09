@@ -20,6 +20,7 @@ import com.derso.vendas.domain.ItemPedido;
 import com.derso.vendas.domain.Pedido;
 import com.derso.vendas.domain.Produto;
 import com.derso.vendas.dto.PedidoRequestDTO;
+import com.derso.vendas.dto.ResumoPedidosProject;
 import com.derso.vendas.repository.ClientesRepository;
 import com.derso.vendas.repository.ItensPedidoRepository;
 import com.derso.vendas.repository.PedidosRepository;
@@ -136,6 +137,11 @@ public class PedidosServiceImpl implements PedidosService {
 		// Exemplo de PAGINAÇÃO
 		return pedidosRepo.pedidosDoPeriodo(
 				inicio, fim, Pageable.ofSize(5).withPage(pagina)).toList();
+	}
+	
+	@Override
+	public List<ResumoPedidosProject> resumoPedidos() {
+		return pedidosRepo.resumoPedidos();
 	}
 	
 }
