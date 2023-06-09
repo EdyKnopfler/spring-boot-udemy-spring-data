@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.derso.vendas.domain.Produto;
-import com.derso.vendas.repository.ClientesRepository;
 import com.derso.vendas.repository.ProdutosRepository;
 
 /*
@@ -35,8 +34,6 @@ import com.derso.vendas.repository.ProdutosRepository;
  *  - código MAIS EFICIENTE possível (nada de fazer find antes de update ou delete)
  *    - rodou a query sem erro, base de dados atualizada e não se fala mais nisso
  */
-
-
 
 @RestController
 @RequestMapping("/produtos")
