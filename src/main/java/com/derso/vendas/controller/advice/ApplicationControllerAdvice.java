@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.derso.vendas.dto.PedidoResponseErrorDTO;
 import com.derso.vendas.service.PedidosException;
 
+/*
+ * TRATADORES DE ERRO
+ */
+
 @RestControllerAdvice
 public class ApplicationControllerAdvice {
 	
