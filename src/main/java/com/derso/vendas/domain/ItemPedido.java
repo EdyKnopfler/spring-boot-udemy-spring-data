@@ -11,6 +11,8 @@ import java.math.BigDecimal;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class ItemPedido {
 	
@@ -22,6 +24,7 @@ public class ItemPedido {
 	private Produto produto;
 	
 	@ManyToOne
+	@JsonIgnore
 	private Pedido pedido;
 	
 	@DecimalMin(value = "0.0", inclusive = false, message = "Preço mínimo positivo")
@@ -38,9 +41,21 @@ public class ItemPedido {
 		setProduto(produto);
 		setQuantidade(quantidade);
 	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public Long getId() {
 		return id;
+	}
+	
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
+	
+	public Pedido getPedido() {
+		return pedido;
 	}
 	
 	public Produto getProduto() {

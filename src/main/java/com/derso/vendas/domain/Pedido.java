@@ -69,6 +69,7 @@ public class Pedido {
 	
 	public void novoItem(ItemPedido item) {
 		itens.add(item);
+		item.setPedido(this);
 		total = total.add(item.getTotalItem());
 	}
 	
