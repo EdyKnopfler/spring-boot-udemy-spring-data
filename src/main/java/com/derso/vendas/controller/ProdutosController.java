@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.derso.vendas.domain.Produto;
+import com.derso.vendas.repository.ClientesRepository;
 import com.derso.vendas.repository.ProdutosRepository;
 
 /*
@@ -39,8 +40,12 @@ import com.derso.vendas.repository.ProdutosRepository;
 @RequestMapping("/produtos")
 public class ProdutosController {
 	
-	@Autowired
 	private ProdutosRepository repositorio;
+	
+	@Autowired
+	public ProdutosController(ProdutosRepository repositorio) {
+		this.repositorio = repositorio;
+	}
 	
 	@GetMapping
 	private List<Produto> listagem(

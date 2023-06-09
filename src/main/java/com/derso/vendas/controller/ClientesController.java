@@ -33,8 +33,12 @@ import com.derso.vendas.repository.ClientesRepository;
 @RequestMapping("/clientes")
 public class ClientesController {
 	
-	@Autowired
 	private ClientesRepository repositorio;
+	
+	@Autowired
+	public ClientesController(ClientesRepository repositorio) {
+		this.repositorio = repositorio;
+	}
 	
 	@GetMapping
 	public List<Cliente> listar(@RequestParam(name="nome", required=false) String nomeBusca) {
