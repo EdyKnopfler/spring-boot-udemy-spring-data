@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.derso.vendas.domain.Pedido;
 import com.derso.vendas.dto.PedidoRequestDTO;
+import com.derso.vendas.dto.PedidoResponseDTO;
 import com.derso.vendas.dto.GenericResponseDTO;
 import com.derso.vendas.dto.PedidoResponseOkDTO;
 import com.derso.vendas.service.PedidosException;
@@ -39,8 +40,12 @@ public class PedidosController {
 	}
 	
 	@GetMapping("/do-cliente/{clienteId}")
-	public List<Pedido> pedidosDoCliente(@PathVariable("clienteId") long clienteId) {
-		return servico.pedidosDoCliente(clienteId);
+	public List<PedidoResponseDTO> pedidosDoCliente(@PathVariable("clienteId") long clienteId) {
+		return servico
+				.pedidosDoCliente(clienteId)
+				.stream()
+				.map(pedido -> PedidoResponseDTO.criarPara(pedido))
+				.toList();
 	}
 	
 }
