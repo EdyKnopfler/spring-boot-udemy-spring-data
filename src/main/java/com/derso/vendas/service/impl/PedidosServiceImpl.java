@@ -18,6 +18,7 @@ import com.derso.vendas.domain.Pedido;
 import com.derso.vendas.domain.Produto;
 import com.derso.vendas.dto.PedidoDTO;
 import com.derso.vendas.repository.ClientesRepository;
+import com.derso.vendas.repository.ItensPedidoRepository;
 import com.derso.vendas.repository.PedidosRepository;
 import com.derso.vendas.repository.ProdutosRepository;
 import com.derso.vendas.service.PedidosException;
@@ -29,15 +30,18 @@ public class PedidosServiceImpl implements PedidosService {
 	private PedidosRepository pedidosRepo;
 	private ClientesRepository clientesRepo;
 	private ProdutosRepository produtosRepo;
+	private ItensPedidoRepository itensRepo;
 	
 	@Autowired
 	public PedidosServiceImpl(
 			PedidosRepository pedidosRepo,
 			ClientesRepository clientesRepo,
-			ProdutosRepository produtosRepo) {
+			ProdutosRepository produtosRepo,
+			ItensPedidoRepository itensRepo) {
 		this.pedidosRepo = pedidosRepo;
 		this.clientesRepo = clientesRepo;
 		this.produtosRepo = produtosRepo;
+		this.itensRepo = itensRepo;
 	}
 
 	@Override
@@ -54,6 +58,7 @@ public class PedidosServiceImpl implements PedidosService {
 		pedido.setData(LocalDate.now());
 		popularItens(dadosPedido, produtos, pedido);
 		pedidosRepo.save(pedido);
+		itensRepo.saveAll(pedido.getItens());  // FUCKING SHIT!
 		return pedido;
 	}
 
@@ -97,9 +102,6 @@ public class PedidosServiceImpl implements PedidosService {
 		dadosPedido.itens().forEach(dadosItem -> {
 			ItemPedido item = new ItemPedido(
 					produtos.get(dadosItem.produtoId()), dadosItem.quantidade());
-			
-			System.out.println(BigDecimal.valueOf(dadosItem.totalEsperado()));
-			System.out.println(item.getTotalItem());
 			
 			// BigDecimal.equals também compara a escala!
 			// https://medium.com/beingabetterdeveloper/comparing-bigdecimal-s-with-different-scales-2901bf26538f
