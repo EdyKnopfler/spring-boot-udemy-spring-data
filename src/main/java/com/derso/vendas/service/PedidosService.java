@@ -3,7 +3,7 @@ package com.derso.vendas.service;
 import java.util.List;
 
 import com.derso.vendas.domain.Pedido;
-import com.derso.vendas.dto.PedidoDTO;
+import com.derso.vendas.dto.PedidoRequestDTO;
 
 /*
  * "Pedidos" é mais complexo e agregará mais repositórios.
@@ -12,7 +12,7 @@ import com.derso.vendas.dto.PedidoDTO;
 
 public interface PedidosService {
 
-	Pedido novoPedido(PedidoDTO dadosPedido) throws PedidosException;
+	Pedido novoPedido(PedidoRequestDTO dadosPedido) throws PedidosException;
 
 	List<Pedido> pedidosDoCliente(long clienteId);
 

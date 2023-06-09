@@ -16,7 +16,7 @@ import com.derso.vendas.domain.Cliente;
 import com.derso.vendas.domain.ItemPedido;
 import com.derso.vendas.domain.Pedido;
 import com.derso.vendas.domain.Produto;
-import com.derso.vendas.dto.PedidoDTO;
+import com.derso.vendas.dto.PedidoRequestDTO;
 import com.derso.vendas.repository.ClientesRepository;
 import com.derso.vendas.repository.ItensPedidoRepository;
 import com.derso.vendas.repository.PedidosRepository;
@@ -46,7 +46,7 @@ public class PedidosServiceImpl implements PedidosService {
 
 	@Override
 	@Transactional
-	public Pedido novoPedido(PedidoDTO dadosPedido) throws PedidosException {
+	public Pedido novoPedido(PedidoRequestDTO dadosPedido) throws PedidosException {
 		if (dadosPedido.itens().isEmpty()) {
 			throw new PedidosException("Pedido sem itens", null);
 		}
@@ -73,7 +73,7 @@ public class PedidosServiceImpl implements PedidosService {
 					"Cliente não encontrado", Arrays.asList(clienteId)));
 	}
 
-	private Map<Long, Produto> buscarProdutos(PedidoDTO dadosPedido) throws PedidosException {
+	private Map<Long, Produto> buscarProdutos(PedidoRequestDTO dadosPedido) throws PedidosException {
 		Map<Long, Produto> produtos = produtosRepo
 				.findAllById(
 						dadosPedido.itens().stream().map(item -> item.produtoId()).toList())
@@ -94,7 +94,7 @@ public class PedidosServiceImpl implements PedidosService {
 	}
 	
 	private void popularItens(
-			PedidoDTO dadosPedido, Map<Long, Produto> produtos, Pedido pedido) 
+			PedidoRequestDTO dadosPedido, Map<Long, Produto> produtos, Pedido pedido) 
 			throws PedidosException {
 		
 		List<Long> totaisNaoCorrespondem = new ArrayList<>();

@@ -7,5 +7,5 @@ public record PedidoResponseErrorDTO(
 	String status, 
 	String problema,
 	List<Long> ids) 
-	implements PedidoResponseDTO {
+	implements GenericResponseDTO {
 }

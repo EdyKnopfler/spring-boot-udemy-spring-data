@@ -1,6 +1,6 @@
 package com.derso.vendas.dto;
 
-public record ItemPedidoDTO(
+public record ItemPedidoRequestDTO(
 	long produtoId,
 	int quantidade,
 	double totalEsperado) {

@@ -2,7 +2,7 @@ package com.derso.vendas.dto;
 
 import java.util.List;
 
-public record PedidoDTO(
+public record PedidoRequestDTO(
 	long clienteId,
-	List<ItemPedidoDTO> itens) {
+	List<ItemPedidoRequestDTO> itens) {
 }

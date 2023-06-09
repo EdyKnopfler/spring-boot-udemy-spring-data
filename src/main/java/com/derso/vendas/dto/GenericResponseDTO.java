@@ -6,7 +6,7 @@ package com.derso.vendas.dto;
  * A intenção é poder devolver subtipos diferentes. Todos eles têm a indicação de status.
  */
 
-public interface PedidoResponseDTO {
+public interface GenericResponseDTO {
 	
 	String status();
 	
