@@ -1,10 +1,9 @@
 package com.derso.vendas.service.impl;
 
-import static com.derso.vendas.service.PedidosException.Problema.CLIENTE_NAO_ENCONTRADO;
-import static com.derso.vendas.service.PedidosException.Problema.PRODUTO_NAO_ENCONTRADO;
-import static com.derso.vendas.service.PedidosException.Problema.TOTAL_ITEM_NAO_CORRESPONDE;
-
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -59,8 +58,9 @@ public class PedidosServiceImpl implements PedidosService {
 
 	private Cliente buscarCliente(long clienteId) throws PedidosException {
 		return clientesRepo
-				.findById(clienteId)
-				.orElseThrow(() -> new PedidosException(CLIENTE_NAO_ENCONTRADO));
+			.findById(clienteId)
+			.orElseThrow(() -> new PedidosException(
+					"Cliente não encontrado", Arrays.asList(clienteId)));
 	}
 
 	private Map<Long, Produto> buscarProdutos(PedidoDTO dadosPedido) throws PedidosException {
@@ -72,28 +72,37 @@ public class PedidosServiceImpl implements PedidosService {
 		
 		if (produtos.size() < dadosPedido.itens().size()) {
 			// Regrinhas de negócio por minha própria conta :)
-			throw new PedidosException(PRODUTO_NAO_ENCONTRADO);
+			List<Long> naoEncontrados = dadosPedido.itens().stream()
+				.map(dadosItem -> dadosItem.produtoId())
+				.filter(produtoId -> !produtos.containsKey(produtoId))
+				.toList();
+			
+			throw new PedidosException("Produto(s) não encontado(s): ", naoEncontrados);
 		}
 		
 		return produtos;
 	}
 	
-	private void popularItens(PedidoDTO dadosPedido, Map<Long, Produto> produtos, Pedido pedido) {
+	private void popularItens(
+			PedidoDTO dadosPedido, Map<Long, Produto> produtos, Pedido pedido) 
+			throws PedidosException {
+		
+		List<Long> totaisNaoCorrespondem = new ArrayList<>();
+		
 		dadosPedido.itens().forEach(dadosItem -> {
 			ItemPedido item = new ItemPedido(
 					produtos.get(dadosItem.produtoId()), dadosItem.quantidade());
 			
 			if (Math.abs(dadosItem.totalEsperado() - item.getTotalItem().floatValue()) < 0.001) {
-				throw new RuntimeException(new PedidosException(TOTAL_ITEM_NAO_CORRESPONDE));
+				totaisNaoCorrespondem.add(dadosItem.produtoId());
 			}
 			
 			pedido.novoItem(item);
 		});
 		
-		if (Math.abs(pedido.getTotal().floatValue() - dadosPedido.totalEsperado()) < 0.001) {
-			throw new RuntimeException(new PedidosException(TOTAL_ITEM_NAO_CORRESPONDE));
+		if (totaisNaoCorrespondem.size() > 0) {
+			throw new PedidosException("Totais de itens não correspondem", totaisNaoCorrespondem);
 		}
 	}
-
 	
 }

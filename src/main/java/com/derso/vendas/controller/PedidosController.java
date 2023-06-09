@@ -37,8 +37,7 @@ public class PedidosController {
 			return ResponseEntity.ok(new PedidoResponseOkDTO("ok", pedido.getId()));
 		} catch (PedidosException e) {
 			return ResponseEntity
-				.badRequest().body(
-					new PedidoResponseErrorDTO("erro", e.getProblema().toString()));
+				.badRequest().body(new PedidoResponseErrorDTO("erro", e.getMessage(), e.getIds()));
 		}
 	}
 	
