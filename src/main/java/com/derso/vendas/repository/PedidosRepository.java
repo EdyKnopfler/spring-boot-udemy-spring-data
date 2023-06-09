@@ -31,6 +31,22 @@ public interface PedidosRepository extends JpaRepository<Pedido, Long> {
 		"WHERE c.id = :clienteId")
 	List<Pedido> pedidosDoCliente(@Param("clienteId") long clienteId);
 
-	Page<Pedido> findByDataBetween(LocalDate inicio, LocalDate fim, Pageable pageable);
+	/*
+	 * O findByDataBetween(inicio, fim, pageable) estava fazendo N+1 mesmo com
+	 * carregamento EAGER dos itens. Bora otimizar sapôrra.
+	 * 
+	 * Mantemos o LAZY na entidade supondo que há uma regra que apenas lista os pedidos
+	 * (por ex., total do mês).
+	 */
+	@Query(
+		"SELECT p FROM Pedido p " +
+		"JOIN FETCH p.cliente c " +
+		"LEFT JOIN FETCH p.itens i " +
+		"JOIN FETCH i.produto pr " +
+		"WHERE p.data BETWEEN :inicio AND :fim")
+	Page<Pedido> pedidosDoPeriodo(
+			@Param("inicio") LocalDate inicio, 
+			@Param("fim") LocalDate fim, 
+			Pageable pageable);
 
 }

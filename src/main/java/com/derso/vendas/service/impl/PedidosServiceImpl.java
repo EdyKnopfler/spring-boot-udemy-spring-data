@@ -134,7 +134,7 @@ public class PedidosServiceImpl implements PedidosService {
 	public List<Pedido> pedidosDoPeriodo(
 			@Param("inicio") LocalDate inicio, @Param("fim") LocalDate fim, int pagina) {
 		// Exemplo de PAGINAÇÃO
-		return pedidosRepo.findByDataBetween(
+		return pedidosRepo.pedidosDoPeriodo(
 				inicio, fim, Pageable.ofSize(5).withPage(pagina)).toList();
 	}
 	
