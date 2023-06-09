@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.derso.vendas.domain.Pedido;
 import com.derso.vendas.dto.PedidoRequestDTO;
@@ -39,6 +40,13 @@ public class PedidosController {
 			@RequestBody PedidoRequestDTO dadosPedido) throws PedidosException {
 		Pedido pedido = servico.novoPedido(dadosPedido);
 		return ResponseEntity.ok(new PedidoResponseOkDTO("ok", pedido.getId()));
+	}
+	
+	@GetMapping("/{id}")
+	public PedidoResponseDTO porId(@PathVariable("id") long id) {
+		return PedidoResponseDTO.criarPara(
+				servico.porId(id).orElseThrow(
+						() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
 	}
 	
 	@GetMapping("/do-cliente/{clienteId}")

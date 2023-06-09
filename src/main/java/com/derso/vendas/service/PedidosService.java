@@ -2,6 +2,7 @@ package com.derso.vendas.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import com.derso.vendas.domain.Pedido;
 import com.derso.vendas.dto.PedidoRequestDTO;
@@ -18,5 +19,7 @@ public interface PedidosService {
 	List<Pedido> pedidosDoCliente(long clienteId);
 
 	List<Pedido> pedidosDoPeriodo(LocalDate inicio, LocalDate fim, int pagina);
+
+	Optional<Pedido> porId(long id);
 
 }

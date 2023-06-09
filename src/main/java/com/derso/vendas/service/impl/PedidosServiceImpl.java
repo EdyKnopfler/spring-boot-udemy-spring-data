@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,6 +118,11 @@ public class PedidosServiceImpl implements PedidosService {
 		if (totaisNaoCorrespondem.size() > 0) {
 			throw new PedidosException("Totais de itens não correspondem", totaisNaoCorrespondem);
 		}
+	}
+	
+	@Override
+	public Optional<Pedido> porId(long id) {
+		return pedidosRepo.findById(id);
 	}
 
 	@Override
