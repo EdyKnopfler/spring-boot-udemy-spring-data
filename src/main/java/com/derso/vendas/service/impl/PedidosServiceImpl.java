@@ -43,6 +43,10 @@ public class PedidosServiceImpl implements PedidosService {
 	@Override
 	@Transactional
 	public Pedido novoPedido(PedidoDTO dadosPedido) throws PedidosException {
+		if (dadosPedido.itens().isEmpty()) {
+			throw new PedidosException("Pedido sem itens", null);
+		}
+		
 		Cliente cliente = buscarCliente(dadosPedido.clienteId());
 		Map<Long, Produto> produtos = buscarProdutos(dadosPedido);
 		Pedido pedido = new Pedido();
