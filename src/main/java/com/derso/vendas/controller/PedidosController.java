@@ -33,7 +33,8 @@ public class PedidosController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<PedidoResponseOkDTO> novo(@RequestBody PedidoRequestDTO dadosPedido) throws PedidosException {
+	public ResponseEntity<PedidoResponseOkDTO> novo(
+			@RequestBody PedidoRequestDTO dadosPedido) throws PedidosException {
 		Pedido pedido = servico.novoPedido(dadosPedido);
 		return ResponseEntity.ok(new PedidoResponseOkDTO("ok", pedido.getId()));
 	}
