@@ -150,7 +150,7 @@ public class PedidosServiceImpl implements PedidosService {
 	@Override
 	@Transactional
 	public void atualizarStatus(long id, StatusPedido novoStatus) throws NaoEncontradoException {
-		int modificadas = pedidosRepo.mudarStatus(id, novoStatus.name());
+		int modificadas = pedidosRepo.mudarStatus(id, novoStatus);
 		if (modificadas == 0) {
 			throw new NaoEncontradoException("pedido", id);
 		}

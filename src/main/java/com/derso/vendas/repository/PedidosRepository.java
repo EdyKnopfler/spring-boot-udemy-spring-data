@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.derso.vendas.domain.Pedido;
+import com.derso.vendas.domain.Pedido.StatusPedido;
 import com.derso.vendas.dto.ResumoPedidosProject;
 
 public interface PedidosRepository extends JpaRepository<Pedido, Long> {
@@ -60,6 +61,6 @@ public interface PedidosRepository extends JpaRepository<Pedido, Long> {
 	
 	@Query("UPDATE Pedido p SET p.status = :status WHERE p.id = :id")
 	@Modifying
-	public int mudarStatus(@Param("id") long id, @Param("status") String status);
+	public int mudarStatus(@Param("id") long id, @Param("status") StatusPedido status);
 
 }

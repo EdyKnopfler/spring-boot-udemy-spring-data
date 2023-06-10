@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.derso.vendas.domain.Pedido;
+import com.derso.vendas.domain.Pedido.StatusPedido;
 import com.derso.vendas.dto.PedidoRequestDTO;
 import com.derso.vendas.dto.PedidoResponseDTO;
 import com.derso.vendas.dto.PedidoResponseOkDTO;
@@ -75,7 +76,7 @@ public class PedidosController {
 	public PedidoResponseOkDTO atualizarStatus(
 			@PathVariable("id") long id, 
 			@RequestBody StatusPedidoRequestDTO novoStatus) throws NaoEncontradoException {
-		servico.atualizarStatus(id, novoStatus.status());
+		servico.atualizarStatus(id, StatusPedido.valueOf(novoStatus.status()));
 		return new PedidoResponseOkDTO("ok", id);
 	}
 	
