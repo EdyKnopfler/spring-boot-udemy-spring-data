@@ -46,6 +46,7 @@ public class ApplicationControllerAdvice {
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public MensagemValidacaoDTO falhaDeValidacao(MethodArgumentNotValidException ex) {
+		// getDefaultMessage(): mensagem definida na anotação do atributo na entidade
 		List<String> erros = ex.getAllErrors().stream().map(
 				error -> error.getDefaultMessage()).toList();
 		return new MensagemValidacaoDTO("erro", erros); 
