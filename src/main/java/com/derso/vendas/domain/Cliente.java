@@ -13,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Cliente {
@@ -22,6 +23,7 @@ public class Cliente {
 	private Long id;
 	
 	@Column(length = 100, unique = true)
+	@NotEmpty(message = "O campo nome é obrigatório")
 	private String nome;
 
 	@Column(length = 11, unique = true)

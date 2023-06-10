@@ -25,6 +25,8 @@ import org.springframework.web.server.ResponseStatusException;
 import com.derso.vendas.domain.Cliente;
 import com.derso.vendas.repository.ClientesRepository;
 
+import jakarta.validation.Valid;
+
 // @RestController = @Controller + @ResponseBody em todos os métodos
 // @ResponseBody = serializa automaticamente a resposta em JSON e empacota
 // em HttpResponse
@@ -85,7 +87,7 @@ public class ClientesController {
 	@PostMapping
 	@Transactional
 	@ResponseStatus(HttpStatus.CREATED)  // Em caso de sucesso
-	public Cliente novoCliente(@RequestBody Cliente cliente) {
+	public Cliente novoCliente(@RequestBody @Valid Cliente cliente) {
 		repositorio.save(cliente);
 		return cliente;  // Devolve com ID
 	}
