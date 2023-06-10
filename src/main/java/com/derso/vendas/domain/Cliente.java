@@ -16,6 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Cliente {
@@ -26,6 +27,7 @@ public class Cliente {
 	
 	@Column(length = 100, unique = true)
 	@NotEmpty(message = "O campo Nome é obrigatório")
+	@Size(max=100)
 	private String nome;
 
 	@Column(length = 11, unique = true)
