@@ -73,20 +73,10 @@ public class PedidosController {
 	// PATCH: atualização parcial (atualizar somente um campo)
 	@PatchMapping("/{id}/status")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public PedidoResponseOkDTO atualizarStatus(
+	public void atualizarStatus(
 			@PathVariable("id") long id, 
 			@RequestBody StatusPedidoRequestDTO novoStatus) throws NaoEncontradoException {
-		StatusPedido status;
-		
-		try {
-			status = StatusPedido.valueOf(novoStatus.status());
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		servico.atualizarStatus(id, status);
-		return new PedidoResponseOkDTO("ok", id);
+		servico.atualizarStatus(id, StatusPedido.valueOf(novoStatus.status()));
 	}
 	
 	private List<PedidoResponseDTO> formatarPedidos(List<Pedido> pedidos) {
