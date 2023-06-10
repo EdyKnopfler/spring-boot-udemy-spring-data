@@ -110,6 +110,7 @@ public class ClientesController {
 		
 		// Desvantagem: a stack trace da exception vai toda para a resposta, razão
 		// porque um ResponseEntity pode ser preferível
+		// (problema resolvido com o ApplicationControllerAdvice)
 		
 		int qtdLinhas = repositorio.excluirPorCpf(cpf);
 		
