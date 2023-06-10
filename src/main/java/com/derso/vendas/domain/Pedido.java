@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.validation.constraints.DecimalMin;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -38,7 +36,7 @@ public class Pedido {
 	@OneToMany(mappedBy = "pedido", fetch = FetchType.LAZY)
 	private List<ItemPedido> itens = new ArrayList<>();
 	
-	@DecimalMin(value = "0.0", inclusive = false, message = "Total mínimo positivo")
+	//@DecimalMin(value = "0.0", inclusive = false, message = "Total mínimo positivo")
 	private BigDecimal total = new BigDecimal("0.0");
 	
 	// A adição da coluna requereu a execução de uma manutenção:

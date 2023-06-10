@@ -6,8 +6,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Size;
 
 @Entity
 public class Produto {
@@ -16,10 +14,10 @@ public class Produto {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@Size(max=100)
+	//@Size(max=100)
 	private String descricao;
 	
-	@DecimalMin(value = "0.0", inclusive = false, message = "Preço mínimo positivo")
+	//@DecimalMin(value = "0.0", inclusive = false, message = "Preço mínimo positivo")
 	private BigDecimal preco;
 	
 	public Produto() {

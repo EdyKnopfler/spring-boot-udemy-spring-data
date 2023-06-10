@@ -1,17 +1,14 @@
 package com.derso.vendas.domain;
 
+import java.math.BigDecimal;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-
-import java.math.BigDecimal;
-
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Min;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class ItemPedido {
@@ -27,10 +24,10 @@ public class ItemPedido {
 	@JsonIgnore
 	private Pedido pedido;
 	
-	@DecimalMin(value = "0.0", inclusive = false, message = "Preço mínimo positivo")
+	//@DecimalMin(value = "0.0", inclusive = false, message = "Preço mínimo positivo")
 	private BigDecimal precoCorrente;
 	
-	@Min(1)
+	//@Min(1)
 	private int quantidade;
 	
 	public ItemPedido() {
