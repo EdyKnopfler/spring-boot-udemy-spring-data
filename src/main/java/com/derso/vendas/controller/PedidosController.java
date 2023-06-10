@@ -76,7 +76,16 @@ public class PedidosController {
 	public PedidoResponseOkDTO atualizarStatus(
 			@PathVariable("id") long id, 
 			@RequestBody StatusPedidoRequestDTO novoStatus) throws NaoEncontradoException {
-		servico.atualizarStatus(id, StatusPedido.valueOf(novoStatus.status()));
+		StatusPedido status;
+		
+		try {
+			status = StatusPedido.valueOf(novoStatus.status());
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		servico.atualizarStatus(id, status);
 		return new PedidoResponseOkDTO("ok", id);
 	}
 	
