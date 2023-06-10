@@ -11,8 +11,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.derso.vendas.domain.Cliente;
 import com.derso.vendas.domain.ItemPedido;
@@ -149,6 +151,7 @@ public class PedidosServiceImpl implements PedidosService {
 
 	@Override
 	@Transactional
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void atualizarStatus(long id, StatusPedido novoStatus) throws NaoEncontradoException {
 		int modificadas = pedidosRepo.mudarStatus(id, novoStatus);
 		if (modificadas == 0) {
