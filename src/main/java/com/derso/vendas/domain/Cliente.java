@@ -26,13 +26,13 @@ public class Cliente {
 	private Long id;
 	
 	@Column(length = 100, unique = true)
-	@NotEmpty(message = "O campo Nome é obrigatório")
+	@NotEmpty(message = "{campo.nome.obrigatorio}")
 	@Size(max=100)
 	private String nome;
 
 	@Column(length = 11, unique = true)
-	@NotEmpty(message = "O campo CPF é obrigatório")
-	@CPF(message = "Informe um CPF válido")
+	@NotEmpty(message = "{campo.cpf.obrigatorio}")
+	@CPF(message = "{campo.cpf.invalido}")
 	private String cpf;
 	
 	@JsonIgnore  // não enviar os pedidos nas respostas HTTP :) 

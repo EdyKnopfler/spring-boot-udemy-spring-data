@@ -36,7 +36,6 @@ public class Pedido {
 	@OneToMany(mappedBy = "pedido", fetch = FetchType.LAZY)
 	private List<ItemPedido> itens = new ArrayList<>();
 	
-	//@DecimalMin(value = "0.0", inclusive = false, message = "Total mínimo positivo")
 	private BigDecimal total = new BigDecimal("0.0");
 	
 	// A adição da coluna requereu a execução de uma manutenção:

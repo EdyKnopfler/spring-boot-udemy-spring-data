@@ -24,10 +24,8 @@ public class ItemPedido {
 	@JsonIgnore
 	private Pedido pedido;
 	
-	//@DecimalMin(value = "0.0", inclusive = false, message = "Preço mínimo positivo")
 	private BigDecimal precoCorrente;
 	
-	//@Min(1)
 	private int quantidade;
 	
 	public ItemPedido() {

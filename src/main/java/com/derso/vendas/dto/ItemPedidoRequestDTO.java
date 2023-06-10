@@ -4,11 +4,11 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 public record ItemPedidoRequestDTO(
-	@NotNull(message = "O código do produto é obrigatório")
+	@NotNull(message = "{campo.codigo-produto.obrigatorio}")
 	Long produtoId,
 	
-	@NotNull(message = "A quantidade é obrigatória")
-	@Min(value = 1, message = "Quantidade mínima: 1")
+	@NotNull(message = "{campo.quantidade.obrigatorio}")
+	@Min(value = 1, message = "{campo.quantidade.positivo}")
 	Integer quantidade,
 	
 	Double totalEsperado) {

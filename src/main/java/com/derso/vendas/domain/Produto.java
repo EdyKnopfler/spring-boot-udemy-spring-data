@@ -18,12 +18,12 @@ public class Produto {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@NotEmpty(message = "O campo Descrição é obrigatório")
+	@NotEmpty(message = "{campo.descricao.obrigatorio}")
 	@Size(max=100)
 	private String descricao;
 	
-	@NotNull(message = "O campo Preço é obrigatório")
-	@DecimalMin(value = "0.0", inclusive = false, message = "Preço mínimo positivo")
+	@NotNull(message = "{campo.preco.obrigatorio}")
+	@DecimalMin(value = "0.0", inclusive = false, message = "{campo.preco.positivo}")
 	private BigDecimal preco;
 	
 	public Produto() {

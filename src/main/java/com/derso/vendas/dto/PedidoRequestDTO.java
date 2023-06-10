@@ -8,11 +8,11 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
 public record PedidoRequestDTO(
-	@NotNull(message = "O código do cliente é obrigatório")
+	@NotNull(message = "{campo.codigo-cliente.obrigatorio}")
 	Long clienteId,
 	
 	// Não faz a validação nos objetos da lista sem o @Valid!
-	@ListaNaoVazia(message = "Os itens do pedido são obrigatórios")
+	@ListaNaoVazia(message = "{campo.items-pedido.obrigatorio}")
 	@Valid
 	List<ItemPedidoRequestDTO> itens) {
 }
