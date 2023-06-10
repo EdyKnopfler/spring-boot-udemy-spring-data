@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.derso.vendas.domain.Produto;
 import com.derso.vendas.repository.ProdutosRepository;
 
+import jakarta.validation.Valid;
+
 /*
  *  DESAFIO!
  *  
@@ -66,7 +68,7 @@ public class ProdutosController {
 	@PostMapping
 	@Transactional
 	@ResponseStatus(HttpStatus.CREATED)
-	public Produto novo(@RequestBody Produto produto) {
+	public Produto novo(@Valid @RequestBody Produto produto) {
 		repositorio.save(produto);
 		return produto;
 	}
