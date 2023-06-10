@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.derso.vendas.domain.Pedido;
 import com.derso.vendas.dto.PedidoRequestDTO;
@@ -23,6 +22,7 @@ import com.derso.vendas.dto.PedidoResponseDTO;
 import com.derso.vendas.dto.PedidoResponseOkDTO;
 import com.derso.vendas.dto.ResumoPedidosProject;
 import com.derso.vendas.dto.StatusPedidoRequestDTO;
+import com.derso.vendas.service.NaoEncontradoException;
 import com.derso.vendas.service.PedidosException;
 import com.derso.vendas.service.PedidosService;
 
@@ -46,10 +46,8 @@ public class PedidosController {
 	}
 	
 	@GetMapping("/{id}")
-	public PedidoResponseDTO porId(@PathVariable("id") long id) {
-		return PedidoResponseDTO.criarPara(
-				servico.porId(id).orElseThrow(
-						() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
+	public PedidoResponseDTO porId(@PathVariable("id") long id) throws NaoEncontradoException {
+		return PedidoResponseDTO.criarPara(servico.porId(id));
 	}
 	
 	@GetMapping("/do-cliente/{clienteId}")
@@ -76,12 +74,9 @@ public class PedidosController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public PedidoResponseOkDTO atualizarStatus(
 			@PathVariable("id") long id, 
-			@RequestBody StatusPedidoRequestDTO novoStatus) {
-		if (servico.atualizarStatus(id, novoStatus.status())) {
-			return new PedidoResponseOkDTO("ok", id);
-		} else {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-		}
+			@RequestBody StatusPedidoRequestDTO novoStatus) throws NaoEncontradoException {
+		servico.atualizarStatus(id, novoStatus.status());
+		return new PedidoResponseOkDTO("ok", id);
 	}
 	
 	private List<PedidoResponseDTO> formatarPedidos(List<Pedido> pedidos) {

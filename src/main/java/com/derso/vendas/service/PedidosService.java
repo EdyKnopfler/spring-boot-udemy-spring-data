@@ -2,7 +2,6 @@ package com.derso.vendas.service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 import com.derso.vendas.domain.Pedido;
 import com.derso.vendas.domain.Pedido.StatusPedido;
@@ -22,10 +21,10 @@ public interface PedidosService {
 
 	List<Pedido> pedidosDoPeriodo(LocalDate inicio, LocalDate fim, int pagina);
 
-	Optional<Pedido> porId(long id);
+	Pedido porId(long id) throws NaoEncontradoException;
 	
 	List<ResumoPedidosProject> resumoPedidos();
 	
-	boolean atualizarStatus(long id, StatusPedido novoStatus);
+	void atualizarStatus(long id, StatusPedido novoStatus) throws NaoEncontradoException;
 
 }

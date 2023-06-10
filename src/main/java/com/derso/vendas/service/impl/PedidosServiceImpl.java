@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +25,7 @@ import com.derso.vendas.repository.ClientesRepository;
 import com.derso.vendas.repository.ItensPedidoRepository;
 import com.derso.vendas.repository.PedidosRepository;
 import com.derso.vendas.repository.ProdutosRepository;
+import com.derso.vendas.service.NaoEncontradoException;
 import com.derso.vendas.service.PedidosException;
 import com.derso.vendas.service.PedidosService;
 
@@ -124,8 +124,9 @@ public class PedidosServiceImpl implements PedidosService {
 	}
 	
 	@Override
-	public Optional<Pedido> porId(long id) {
-		return pedidosRepo.findById(id);
+	public Pedido porId(long id) throws NaoEncontradoException {
+		return pedidosRepo.findById(id).orElseThrow(
+				() -> new NaoEncontradoException("pedido", id));
 	}
 
 	@Override
@@ -148,9 +149,11 @@ public class PedidosServiceImpl implements PedidosService {
 
 	@Override
 	@Transactional
-	public boolean atualizarStatus(long id, StatusPedido novoStatus) {
+	public void atualizarStatus(long id, StatusPedido novoStatus) throws NaoEncontradoException {
 		int modificadas = pedidosRepo.mudarStatus(id, novoStatus.name());
-		return modificadas > 0;
+		if (modificadas == 0) {
+			throw new NaoEncontradoException("pedido", id);
+		}
 	}
 	
 }
