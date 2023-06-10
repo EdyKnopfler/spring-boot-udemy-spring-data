@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -23,10 +25,12 @@ public class Cliente {
 	private Long id;
 	
 	@Column(length = 100, unique = true)
-	@NotEmpty(message = "O campo nome é obrigatório")
+	@NotEmpty(message = "O campo Nome é obrigatório")
 	private String nome;
 
 	@Column(length = 11, unique = true)
+	@NotEmpty(message = "O campo CPF é obrigatório")
+	@CPF(message = "Informe um CPF válido")
 	private String cpf;
 	
 	@JsonIgnore  // não enviar os pedidos nas respostas HTTP :) 
