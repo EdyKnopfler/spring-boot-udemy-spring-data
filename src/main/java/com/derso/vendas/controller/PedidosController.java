@@ -27,6 +27,8 @@ import com.derso.vendas.service.NaoEncontradoException;
 import com.derso.vendas.service.PedidosException;
 import com.derso.vendas.service.PedidosService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/pedidos")
 public class PedidosController {
@@ -41,7 +43,7 @@ public class PedidosController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<PedidoResponseOkDTO> novo(
-			@RequestBody PedidoRequestDTO dadosPedido) throws PedidosException {
+			@Valid @RequestBody PedidoRequestDTO dadosPedido) throws PedidosException {
 		Pedido pedido = servico.novoPedido(dadosPedido);
 		return ResponseEntity.ok(new PedidoResponseOkDTO("ok", pedido.getId()));
 	}
