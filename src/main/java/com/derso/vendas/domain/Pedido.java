@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.validation.constraints.DecimalMin;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -45,7 +44,6 @@ public class Pedido {
 	// A adição da coluna requereu a execução de uma manutenção:
 	// update pedido set status = 'REALIZADO'
 	@Enumerated(EnumType.STRING)
-	@Column(columnDefinition = "default 'REALIZADO")
 	private StatusPedido status;
 	
 	public Pedido() {
